@@ -20,3 +20,36 @@ payski_mobile
 errors.txt
 Antigravity Experiments.code-workspace
 .agent/
+
+# Aggressive Bloat Exclusions
+**/node_modules/
+**/dist/
+**/build/
+**/out/
+**/.next/
+**/.turbo/
+**/netlify-deploy/
+**/*.glb
+**/*.mp4
+**/*.mov
+**/*.zip
+**/*.tar
+**/*.gz
+**/*.rar
+**/3d assets/
+**/3d environment/
+**/anime 3d assets/
+**/music 3d assets/
+**/tech fantasy 3d assets/
+**/bass fantasy 3d assets/
+**/altered state 3d assets/
+**/public/hero.png
+**/public/*.png
+**/public/*.jpg
+**/public/*.jpeg
+**/public/*.gif
+**/public/*.svg
+# Re-include small SVGs if needed, but for now let's be safe.
+!**/public/pwa-icon.svg
+!**/public/favicon.ico
+!**/public/manifest.json
