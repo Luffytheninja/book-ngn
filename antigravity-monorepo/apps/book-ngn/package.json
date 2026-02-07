@@ -16,7 +16,8 @@
     "lucide-react": "latest",
     "recharts": "latest",
     "clsx": "latest",
-    "tailwind-merge": "latest"
+    "tailwind-merge": "latest",
+    "@supabase/supabase-js": "latest"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

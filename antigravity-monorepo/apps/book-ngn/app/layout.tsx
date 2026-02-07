@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google'; // Using Geist as "Inter-like" modern font
 import './globals.css';
-import { BookkeepingProvider } from '@/components/providers/BookkeepingContext';
+
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   },
 };
 
+import { BookkeepingProvider } from '@/components/providers/BookkeepingContext';
+import QueryProvider from '@/components/providers/QueryProvider';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,8 +39,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
-        <BookkeepingProvider>{children}</BookkeepingProvider>
+        <QueryProvider>
+          <BookkeepingProvider>{children}</BookkeepingProvider>
+        </QueryProvider>
       </body>
     </html>
   );
 }
+

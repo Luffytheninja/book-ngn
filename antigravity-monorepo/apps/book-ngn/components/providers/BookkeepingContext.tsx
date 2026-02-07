@@ -13,6 +13,7 @@ import {
   loadUserCategory,
   saveUserCategory,
 } from '@/utils/persistence';
+import { supabase } from '@/lib/supabase';
 
 interface BookkeepingContextType {
   // Financial Entries
@@ -58,7 +59,9 @@ export function BookkeepingProvider({ children }: { children: React.ReactNode })
   // Initial Load
   useEffect(() => {
     const loadedUserData = loadUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (loadedUserData) setUserData(loadedUserData);
+
 
     setIncomeEntries(loadIncomeEntries());
     setExpenseEntries(loadExpenseEntries());
@@ -80,8 +83,31 @@ export function BookkeepingProvider({ children }: { children: React.ReactNode })
   }, [expenseEntries, isLoading]);
 
   useEffect(() => {
-    if (!isLoading) saveUserCategory(userCategory);
-  }, [userCategory, isLoading]);
+    if (!isLoading) {
+      saveUserCategory(userCategory);
+
+      // Async Sync to Supabase
+      const syncToSupabase = async () => {
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            await supabase.from('bookkeeping_data').upsert({
+              user_id: user.id,
+              user_data: userData,
+              income_entries: incomeEntries,
+              expense_entries: expenseEntries,
+              category: userCategory,
+              updated_at: new Date().toISOString()
+            });
+          }
+        } catch (error) {
+          console.error('Supabase Sync Error:', error);
+        }
+      };
+
+      syncToSupabase();
+    }
+  }, [userCategory, userData, incomeEntries, expenseEntries, isLoading]);
 
   // Actions
   const addIncome = (entry: IncomeEntry) => {
