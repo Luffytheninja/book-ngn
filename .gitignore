@@ -45,6 +45,14 @@ payski_mobile
 **/bass fantasy 3d assets/
 **/altered state 3d assets/
 
+# Portfolio Assets Bloat (Identified Culprits)
+**/public/assets/portfolio/
+**/public/portfolio/
+
+# Static Build Assets
+**/.next/
+**/.turbo/
+
 # Re-include essential assets
 !**/public/pwa-icon.svg
 !**/public/favicon.ico
